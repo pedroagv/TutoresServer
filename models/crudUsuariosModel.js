@@ -1,6 +1,6 @@
 const { sql, poolPromise } = require('../config/dbConfig');
 
-async function ejecutarCrudUsuarios(id, nombres, apellidos, codtipodocumento, identificacion, login, password, codtipousuario, accion) {
+async function ejecutarCrudUsuarios(id, nombres, apellidos, codtipodocumento, identificacion, usuario, clave, codtipousuario, accion) {
     try {
         // const request = pool.request();
         const pool = await poolPromise;
@@ -11,8 +11,8 @@ async function ejecutarCrudUsuarios(id, nombres, apellidos, codtipodocumento, id
         if (apellidos !== null) request.input('apellidos', apellidos);
         if (codtipodocumento !== null) request.input('codtipodocumento', codtipodocumento);
         if (identificacion !== null) request.input('identificacion', identificacion);
-        if (login !== null) request.input('login', login);
-        if (password !== null) request.input('password', password);
+        if (usuario !== null) request.input('usuario', usuario);
+        if (clave !== null) request.input('clave', clave);
         if (codtipousuario !== null) request.input('codtipousuario', codtipousuario);
         request.input('accion', accion);
 

@@ -1,12 +1,22 @@
 const { ejecutarCrudUsuarios } = require('../models/crudUsuariosModel');
 
 async function crearUsuario(req, res) {
-    const { nombres, apellidos, codtipodocumento, identificacion, login, password, codtipousuario } = req.body;
+    const { nombres, apellidos, codtipodocumento, identificacion, usuario, clave, codtipousuario } = req.body;
 
     try {
-        const resultado = await ejecutarCrudUsuarios(null, nombres, apellidos, codtipodocumento, identificacion, login, password, codtipousuario, 'crear');
+        const resultado = await ejecutarCrudUsuarios(null, nombres, apellidos, codtipodocumento, identificacion, usuario, clave, codtipousuario, 'crear');
         const nuevoId = resultado[0].nuevoId;
         res.status(201).json({ message: 'creado correctamente', id: nuevoId });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function iniciarSesion(req, res) {
+    const { usuario, clave } = req.body;
+    try {
+        const resultado = await ejecutarCrudUsuarios(null, null, null, null, null, usuario, clave, null, 'login');
+        res.json(resultado);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -23,10 +33,10 @@ async function obtenerUsuarios(req, res) {
 
 async function actualizarUsuario(req, res) {
     const { id } = req.params;
-    const { nombres, apellidos, codtipodocumento, identificacion, login, password, codtipousuario } = req.body;
+    const { nombres, apellidos, codtipodocumento, identificacion, usuario, clave, codtipousuario } = req.body;
 
     try {
-        await ejecutarCrudUsuarios(id, nombres, apellidos, codtipodocumento, identificacion, login, password, codtipousuario, 'actualizar');
+        await ejecutarCrudUsuarios(id, nombres, apellidos, codtipodocumento, identificacion, usuario, clave, codtipousuario, 'actualizar');
         res.json({ message: 'actualizado correctamente' });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -49,4 +59,5 @@ module.exports = {
     obtenerUsuarios,
     actualizarUsuario,
     eliminarUsuario,
+    iniciarSesion,
 };

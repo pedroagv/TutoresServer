@@ -29,13 +29,13 @@ GO
 
 CREATE TABLE usuarios (
     id INT PRIMARY KEY IDENTITY (1,1),
-    nombres VARCHAR(255),
-    apellidos VARCHAR(255),
-    codtipodocumento INT,
-    codtipousuario INT,
-    identificacion INT,
-    login VARCHAR(255),
-	password VARCHAR(255),
+    codtipousuario INT, --
+    nombres VARCHAR(255), --
+    apellidos VARCHAR(255), --
+    usuario VARCHAR(255), --
+	clave VARCHAR(255), --
+    codtipodocumento INT, --
+    identificacion INT, --
     FOREIGN KEY (codtipodocumento) REFERENCES tipodocumentos(id),
 	FOREIGN KEY (codtipousuario) REFERENCES tipousuarios(id)
 );
@@ -93,8 +93,8 @@ CREATE OR ALTER PROCEDURE crud_usuarios
     @id INT = NULL,
     @nombres VARCHAR(255) = NULL,
     @apellidos VARCHAR(255) = NULL,
-	@login VARCHAR(255) = NULL,
-	@password VARCHAR(255) = NULL,
+	@Usuario VARCHAR(255) = NULL,
+	@Clave VARCHAR(255) = NULL,
     @codtipodocumento INT = NULL,
 	@codtipousuario INT = NULL,
     @identificacion INT = NULL,
@@ -103,8 +103,8 @@ AS
 BEGIN
     IF LOWER(@accion) = 'c' OR LOWER(@accion) = 'crear'
     BEGIN
-        INSERT INTO usuarios (nombres, apellidos, codtipodocumento, identificacion, codtipousuario, login, password)
-        VALUES (@nombres, @apellidos, @codtipodocumento, @identificacion,@codtipousuario,@login,@password);
+        INSERT INTO usuarios (nombres, apellidos, codtipodocumento, identificacion, codtipousuario, Usuario, Clave)
+        VALUES (@nombres, @apellidos, @codtipodocumento, @identificacion,@codtipousuario,@Usuario,@Clave);
         SELECT SCOPE_IDENTITY() AS nuevoId;
     END
     ELSE IF LOWER(@accion) = 'r' OR LOWER(@accion) = 'leer'
@@ -123,6 +123,27 @@ BEGIN
     ELSE IF LOWER(@accion) = 'd' OR LOWER(@accion) = 'eliminar'
     BEGIN
         DELETE FROM usuarios WHERE id = @id;
+    END
+	ELSE IF LOWER(@accion) = 'iniciar sesion' OR LOWER(@accion) = 'login'
+    BEGIN
+		 -- Verificar si el usuario existe con la clave hash
+        IF EXISTS ( SELECT 1 FROM usuarios WHERE Usuario = @Usuario AND Clave= @Clave)
+        BEGIN
+            SELECT * 
+            FROM usuarios 
+            WHERE Usuario = @Usuario AND Clave= @Clave;
+        END
+        ELSE
+        BEGIN
+            -- Genera un error si el usuario no existe o la clave es incorrecta
+            RAISERROR ('Usuario o clave incorrectos', 16, 1);
+        END
+    END
+    ELSE
+    BEGIN
+        -- Genera un error si la acción no es reconocida
+        RAISERROR ('Acción no reconocida', 16, 1);
+    END
     END
 END
 GO
@@ -483,8 +504,8 @@ GO
 EXEC crud_usuarios 
 	@nombres = 'Pedro', 
 	@apellidos = 'Guerrero Velasco', 
-	@login = 'PedroGv',
-    @password = 'cbdvidsnokasioow',
+	@Usuario = 'PedroGv',
+    @Clave = 'cbdvidsnokasioow',
 	@codtipodocumento = 1, 
 	@codtipousuario = 2,
 	@identificacion = 1014216596, 
@@ -495,8 +516,8 @@ GO
 EXEC crud_usuarios 
 	@nombres = 'Javier Leonardo', 
 	@apellidos = 'Rodriguez', 
-	@login = 'JavierR',
-    @password = '34567890bhdcshc',
+	@Usuario = 'JavierR',
+    @Clave = '34567890bhdcshc',
 	@codtipodocumento = 1, 
 	@codtipousuario = 1,
 	@identificacion = 1014216596, 
