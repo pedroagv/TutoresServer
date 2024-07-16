@@ -1,6 +1,12 @@
 USE db_aaacd8_tutorias;
 GO
 
+/*
+user: 'db_aaacd8_tutorias_admin',
+password: 'Juliana07',
+server: 'sql8005.site4now.net',
+database: 'db_aaacd8_tutorias',
+*/
 -- Eliminar tablas intermedias y tablas con claves foráneas primero
 DROP TABLE IF EXISTS tutores_materias;
 DROP TABLE IF EXISTS tutores;
@@ -503,8 +509,8 @@ GO
 EXEC crud_usuarios 
 	@nombres = 'Pedro', 
 	@apellidos = 'Guerrero Velasco', 
-	@Usuario = '1',
-    @Clave = '1',
+	@Usuario = 'pedrogv',
+    @Clave = '123',
 	@codtipodocumento = 1, 
 	@codtipousuario = 2,
 	@identificacion = 1014216596, 
@@ -515,8 +521,8 @@ GO
 EXEC crud_usuarios 
 	@nombres = 'Javier Leonardo', 
 	@apellidos = 'Rodriguez', 
-	@Usuario = '2',
-    @Clave = '2',
+	@Usuario = 'javier',
+    @Clave = 'prueba',
 	@codtipodocumento = 1, 
 	@codtipousuario = 1,
 	@identificacion = 1014216596, 
