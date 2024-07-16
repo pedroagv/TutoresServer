@@ -144,7 +144,6 @@ BEGIN
         -- Genera un error si la acción no es reconocida
         RAISERROR ('Acción no reconocida', 16, 1);
     END
-    END
 END
 GO
 
@@ -504,8 +503,8 @@ GO
 EXEC crud_usuarios 
 	@nombres = 'Pedro', 
 	@apellidos = 'Guerrero Velasco', 
-	@Usuario = 'PedroGv',
-    @Clave = 'cbdvidsnokasioow',
+	@Usuario = '1',
+    @Clave = '1',
 	@codtipodocumento = 1, 
 	@codtipousuario = 2,
 	@identificacion = 1014216596, 
@@ -516,8 +515,8 @@ GO
 EXEC crud_usuarios 
 	@nombres = 'Javier Leonardo', 
 	@apellidos = 'Rodriguez', 
-	@Usuario = 'JavierR',
-    @Clave = '34567890bhdcshc',
+	@Usuario = '2',
+    @Clave = '2',
 	@codtipodocumento = 1, 
 	@codtipousuario = 1,
 	@identificacion = 1014216596, 
