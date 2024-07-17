@@ -499,7 +499,7 @@ GO
 -- insersion de datos de pruebas
 INSERT INTO tipousuarios (tipousuario) VALUES ('Tutor'), ('Estudiante');
 INSERT INTO tipodocumentos (tipodocumento) VALUES ('Cedula Ciudadania'),('Tarjeta Identidad'),('Pasaporte');
-INSERT INTO materias (nombre) VALUES ('Matemáticas'), ('Ciencias'), ('Historia');
+INSERT INTO materias (nombre) VALUES ('Matemáticas'), ('Ciencias'), ('Historia') ,  ('Desarrollo de software');
 INSERT INTO niveles_educativos (nivel) VALUES ('Primaria'), ('Secundaria'), ('Universidad');
 INSERT INTO areas_geograficas (area) VALUES ('Centro'), ('Norte'), ('Sur');
 INSERT INTO disponibilidad (disponibilidad) VALUES ('Mañana'), ('Tarde'), ('Noche');
